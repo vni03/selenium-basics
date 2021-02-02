@@ -5,8 +5,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 driver = object
 action = object
 
-# tests are run in the order they are defined, so this test will run first
-def test_before():
+# Run before any tests are run
+def setup_module():
     global driver
     global action
     driver = webdriver.Chrome('c:\\pf\\bin\\chromedriver.exe')  
@@ -16,7 +16,10 @@ def test_before():
     # create action chain object 
     action = ActionChains(driver) 
 
-    assert True
+# Run after all the tests have run last
+def teardown_module():
+    driver.close()
+    driver.quit()
 
 
 def test_do_name_fields_capitalize():
@@ -34,10 +37,3 @@ def test_does_date_feild_show_correct_value():
     assert expected_result == result
 
 
-# tests are run in the order they are defined, so this test will run last
-def test_after():
-    time.sleep(5)
-
-    driver.close()
-
-    assert True

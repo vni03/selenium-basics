@@ -5,14 +5,15 @@ from selenium.webdriver.common.alert import Alert
 driver = object
 
 
-def setup():
+def setup_module():
     global driver
 
     driver = webdriver.Chrome('c:\\pf\\bin\\chromedriver.exe')  
     # Optional argument, if not specified will search path.
     #driver = webdriver.Chrome()
 
-def after_tests():
+def teardown_module():
+    driver.close()
     driver.quit()
 
 def test_fields_on_form():
@@ -29,8 +30,6 @@ def test_fields_on_form():
     alert.accept()
     time.sleep(3)
 
-    driver.close()  # close the browser
-
     assert True
 
 def test_navigation():
@@ -42,11 +41,6 @@ def test_navigation():
     search_box.submit()
     time.sleep(5) # Let the user actually see something!
 
-    driver.close()  # close the browser
-
-    after_tests()
-
     assert True
 
-setup()
 
